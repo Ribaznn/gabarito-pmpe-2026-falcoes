@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gabarito PMPE 2026 · Falcões</title>
+<meta name="description" content="Marque o seu gabarito do Simulado PMPE 2026 da Falcões Preparatório e baixe o PDF com a sua nota.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:,">
+<link rel="preload" href="assets/fonts/Anton-Regular.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topo">
+  <img class="logo" src="assets/logo.png" alt="Falcões Carreiras Policiais" width="520" height="214">
+  <span class="selo">PMPE 2026</span>
+</header>
+
+<main>
+  <!-- 1. Início -->
+  <section id="tela-inicio" class="tela" hidden>
+    <div class="hero">
+      <p class="kicker">Simulado · Gabarito online</p>
+      <h1>Marque seu <span>gabarito</span></h1>
+      <p class="lead">Preencha as suas respostas do Simulado PMPE 2026. Ao finalizar, você vê a sua nota e baixa o PDF com as marcações comparadas ao gabarito oficial.</p>
+      <ul class="fatos">
+        <li><b id="fato-total">60</b> questões</li>
+        <li>Alternativas <b id="fato-alts">A a E</b></li>
+        <li>Nota na hora</li>
+      </ul>
+    </div>
+    <form id="form-inicio" class="cartao" novalidate>
+      <div class="campo">
+        <label for="nome">Seu nome completo</label>
+        <input id="nome" name="nome" type="text" autocomplete="name" autocapitalize="words" maxlength="80" placeholder="Ex.: Maria da Silva" required>
+        <p id="erro-nome" class="erro" role="alert"></p>
+      </div>
+      <button type="submit" class="btn btn-azul">Começar</button>
+      <p class="nota-pe">O horário de início é registrado quando você toca em Começar. As marcações ficam salvas neste aparelho, mesmo se fechar a página.</p>
+    </form>
+  </section>
+
+  <!-- 2. Marcação -->
+  <section id="tela-prova" class="tela" hidden>
+    <div class="barra">
+      <div class="barra-linha">
+        <span class="aluno" id="barra-nome"></span>
+        <span class="relogio" id="relogio" aria-label="Tempo decorrido">00:00:00</span>
+      </div>
+      <div class="barra-linha sub">
+        <span id="barra-inicio"></span>
+        <span><b id="contagem">0</b>/<span id="contagem-total">60</span> marcadas</span>
+      </div>
+      <div class="progresso" aria-hidden="true"><i id="progresso"></i></div>
+    </div>
+    <p class="dica">Toque na letra para marcar. Toque de novo para desmarcar.</p>
+    <div id="questoes"></div>
+    <div class="fim">
+      <button type="button" id="btn-finalizar" class="btn btn-preto">Finalizar gabarito</button>
+      <p class="nota-pe">Depois de finalizar, as respostas não podem mais ser alteradas.</p>
+    </div>
+  </section>
+
+  <!-- 3. Resultado -->
+  <section id="tela-resultado" class="tela" hidden>
+    <p class="kicker topo-res">Gabarito finalizado</p>
+    <h2 class="nome-res" id="res-nome"></h2>
+    <div class="placar">
+      <div>
+        <p class="rot">Nota final</p>
+        <p class="nota" id="res-nota"></p>
+        <p class="pct" id="res-pct"></p>
+      </div>
+      <div class="chips" id="res-chips"></div>
+    </div>
+    <div class="tempos">
+      <div><small>Início</small><b id="res-inicio"></b><span id="res-inicio-d"></span></div>
+      <div><small>Fim</small><b id="res-fim"></b><span id="res-fim-d"></span></div>
+      <div><small>Duração</small><b id="res-dur"></b><span>h:min:s</span></div>
+    </div>
+    <button type="button" id="btn-pdf" class="btn btn-azul btn-grande">Baixar gabarito</button>
+    <p class="nota-pe centro">PDF com seu nome, horários, marcações, gabarito oficial e nota.</p>
+
+    <h3 class="sec">Desempenho por matéria</h3>
+    <div id="res-materias" class="materias"></div>
+
+    <h3 class="sec">Suas marcações × gabarito oficial</h3>
+    <div class="legenda"><span class="lg certo">Certa</span><span class="lg errado">Errada</span><span class="lg branco">Em branco</span></div>
+    <div id="res-grade" class="conf"></div>
+
+    <button type="button" id="btn-refazer" class="btn btn-linha">Fazer de novo</button>
+  </section>
+</main>
+
+<div id="modal" class="modal" hidden>
+  <div class="caixa" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+    <h3 id="modal-titulo"></h3>
+    <p id="modal-texto"></p>
+    <div class="acoes">
+      <button type="button" id="modal-nao" class="btn btn-linha">Voltar</button>
+      <button type="button" id="modal-sim" class="btn btn-preto">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<footer class="rodape">Falcões Preparatório · Carreiras Policiais · <b>@falcoespreparatorio</b></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha384-JcnsjUPPylna1s1fvi1u12X5qjY5OL56iySh75FdtrwhO/SWXgMjoVqcKyIIWOLk" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+<script src="gabarito.js" defer></script>
+<script src="app.js" defer></script>
+</body>
+</html>
