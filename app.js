@@ -1,6 +1,9 @@
 (function () {
   "use strict";
 
+  // cada tela abre do topo (o navegador não restaura a rolagem antiga)
+  try { history.scrollRestoration = "manual"; } catch (e) { /* ignora */ }
+
   var G = window.GABARITO;
   var Q = G.questoes;
   var ALTS = G.alternativas.split("");
@@ -32,6 +35,7 @@
   }
   // duração pelos segundos inteiros, para bater com os horários mostrados
   function duracao() { return fmtDur((Math.floor(st.fim / 1000) - Math.floor(st.inicio / 1000)) * 1000); }
+  function plural(n, um, varios) { return n + " " + (n === 1 ? um : varios); }
   function pct(a, t) { return (t ? (a / t) * 100 : 0).toFixed(1).replace(".", ",") + "%"; }
   function el(tag, cls, txt) {
     var e = document.createElement(tag);
@@ -218,10 +222,10 @@
     $("res-pct").textContent = r.pct + " de aproveitamento";
     var chips = $("res-chips");
     chips.textContent = "";
-    [["certas", r.certas], ["erradas", r.erradas], ["em branco", r.branco]].forEach(function (c) {
+    [[r.certas, "certa", "certas"], [r.erradas, "errada", "erradas"], [r.branco, "em branco", "em branco"]].forEach(function (c) {
       var s = el("span");
-      s.appendChild(el("b", null, c[1]));
-      s.appendChild(document.createTextNode(" " + c[0]));
+      s.appendChild(el("b", null, c[0]));
+      s.appendChild(document.createTextNode(" " + (c[0] === 1 ? c[1] : c[2])));
       chips.appendChild(s);
     });
     $("res-inicio").textContent = fmtHora(st.inicio);
@@ -352,7 +356,7 @@
     var wn = doc.getTextWidth(nota);
     fonte(F.t, 18, [154, 163, 181]); doc.text("/" + r.total, M + 6 + wn + 1.2, y + 27);
     fonte(F.r, 9, [219, 228, 255]); doc.text(r.pct + " de aproveitamento", M + 6, y + 34.5);
-    var cont = r.certas + " certas · " + r.erradas + " erradas · " + r.branco + " em branco";
+    var cont = plural(r.certas, "certa", "certas") + " · " + plural(r.erradas, "errada", "erradas") + " · " + r.branco + " em branco";
     var tc = caber(cont, F.r, 7.8, LB - 12);
     fonte(F.r, tc, [200, 206, 218]); doc.text(cont, M + 6, y + 41.5);
 
