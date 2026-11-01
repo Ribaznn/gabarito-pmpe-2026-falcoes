@@ -30,6 +30,8 @@
     var s = Math.max(0, Math.round(ms / 1000));
     return p2(Math.floor(s / 3600)) + ":" + p2(Math.floor((s % 3600) / 60)) + ":" + p2(s % 60);
   }
+  // duração pelos segundos inteiros, para bater com os horários mostrados
+  function duracao() { return fmtDur((Math.floor(st.fim / 1000) - Math.floor(st.inicio / 1000)) * 1000); }
   function pct(a, t) { return (t ? (a / t) * 100 : 0).toFixed(1).replace(".", ",") + "%"; }
   function el(tag, cls, txt) {
     var e = document.createElement(tag);
@@ -213,7 +215,7 @@
     $("res-nota").innerHTML = "";
     $("res-nota").appendChild(document.createTextNode(r.certas));
     $("res-nota").appendChild(el("small", null, "/" + r.total));
-    $("res-pct").textContent = r.pct + " de aproveitamento · 1 ponto por questão";
+    $("res-pct").textContent = r.pct + " de aproveitamento";
     var chips = $("res-chips");
     chips.textContent = "";
     [["certas", r.certas], ["erradas", r.erradas], ["em branco", r.branco]].forEach(function (c) {
@@ -226,7 +228,7 @@
     $("res-inicio-d").textContent = fmtData(st.inicio);
     $("res-fim").textContent = fmtHora(st.fim);
     $("res-fim-d").textContent = fmtData(st.fim);
-    $("res-dur").textContent = fmtDur(st.fim - st.inicio);
+    $("res-dur").textContent = duracao();
 
     var mats = $("res-materias");
     mats.textContent = "";
@@ -335,7 +337,7 @@
     var tamNome = caber(st.nome, F.b, 12.5, LARG - 10);
     fonte(F.b, tamNome); doc.text(st.nome, M + 5, y + 10.8);
     var cw = (LARG - 10) / 3;
-    [["Início", fmtDataHora(st.inicio)], ["Fim", fmtDataHora(st.fim)], ["Duração", fmtDur(st.fim - st.inicio)]].forEach(function (c, i) {
+    [["Início", fmtDataHora(st.inicio)], ["Fim", fmtDataHora(st.fim)], ["Duração", duracao()]].forEach(function (c, i) {
       var x = M + 5 + i * cw;
       rotulo(c[0], x, y + 18.6);
       fonte(F.r, 9.8); doc.text(c[1], x, y + 23.8);
@@ -370,7 +372,7 @@
 
     // tabela: marcações × gabarito oficial
     y = 124;
-    fonte(F.t, 13); doc.text("SUAS MARCAÇÕES × GABARITO OFICIAL", M, y);
+    fonte(F.t, 13); doc.text("SUAS MARCAÇÕES E O GABARITO OFICIAL", M, y);
     var leg = [["Certa", BLUE, "F"], ["Errada", INK, "F"], ["Em branco", null, "S"]];
     var xl = X2;
     for (var k = leg.length - 1; k >= 0; k--) {
